@@ -3,7 +3,8 @@
 </p>
 
 <p align="center">
-  <i>Projeto feito na trilha de ReactJs do evento NLW Together</i>
+  <i>Projeto feito na trilha de ReactJs do evento NLW Together.</i><br>
+  <i><a href="https://letmeask-68aa3.web.app/">Veja funcionando</a></i>
 </p>
 
 

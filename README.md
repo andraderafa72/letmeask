@@ -1,7 +1,11 @@
 # letmeask
 Projeto feito na trilha de ReactJs do evento NLW Together
 
-![alt text](https://i.ibb.co/KLr8cTZ/screencapture-letmeask-68aa3-web-app-rooms-Md0-Fx-N-R70i-S2-Rw7ht-H-2021-06-25-00-49-36.png)
+### Light theme
+![alt text](https://i.ibb.co/1XWsMKV/letmeask-light.png)
+
+### Dark theme
+![alt text](https://i.ibb.co/TqR4C7R/letmeask-dark.png)
 
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -20,9 +24,11 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Firebase](https://firebase.google.com/?hl=pt)
 
+ ✔ Responsivo para Mobile
+
 ## 💻 Projeto
 
-Letmeask
+Projeto desenvolvido na trilha de React Js do evento Next Level Week Together, com aulas incriveis do [Diego Fernandes](https://github.com/diego3g)
 
 ## 🚀 Como executar
 

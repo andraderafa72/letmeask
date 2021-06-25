@@ -16,6 +16,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import '../styles/room.scss'
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
+import { Modal } from '../components/Modal';
 
 type RoomParams = {
   id: string;
@@ -24,11 +25,17 @@ type RoomParams = {
 export function AdminRoom() {
   const params = useParams<RoomParams>()
   const roomId = params.id
-  const { questions, title, hasAnswers } = useRoom(roomId)
   const history = useHistory()
-  const [isAnswering ,setIsAnswering] = useState(false)
+
+  const { questions, title, hasAnswers } = useRoom(roomId)
+  const { user } = useAuth();
+
+  const [isAnswering, setIsAnswering] = useState(false)
   const [questionIdToAnswer, setQuestionIdToAnswer] = useState<string>()
-  const {user} = useAuth();
+
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [idToDelete, setIdToDelete] = useState('')
+
 
   useEffect(() => {
     toast('Seja bem-vindo!', {
@@ -38,19 +45,17 @@ export function AdminRoom() {
 
   async function handleDeleteQuestion(questionId: string) {
     const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
-    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+    if (!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
 
-
-    if (window.confirm('Tem certeza que deseja excluir esta pergunta?')) {
-      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
-    }
-
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
+    setIsModalVisible(false)
+    setIdToDelete('')
     toast.error('Pergunta apagada!')
   }
 
   async function handleCheckQuestionAsAnswered(questionId: string) {
     const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
-    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+    if (!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
 
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isAnswered: true
@@ -59,9 +64,9 @@ export function AdminRoom() {
     toast.error('Pergunta respondida!')
   }
 
-  async function handleSetAnswer(answer: string){
+  async function handleSetAnswer(answer: string) {
     const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
-    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+    if (!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
 
     await database.ref(`rooms/${roomId}/questions/${questionIdToAnswer}`).update({
       isAnswered: true,
@@ -73,14 +78,14 @@ export function AdminRoom() {
 
   async function HandleSwitchHighlightQuestion(questionId: string, isHighlighted: boolean) {
     const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
-    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+    if (!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
 
     if (isHighlighted) {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
         isHighlighted: false
       });
 
-      if(hasAnswers){
+      if (hasAnswers) {
         setIsAnswering(false)
         setQuestionIdToAnswer('')
       }
@@ -89,7 +94,7 @@ export function AdminRoom() {
         isHighlighted: true
       })
 
-      if(hasAnswers){
+      if (hasAnswers) {
         setQuestionIdToAnswer(questionId)
         setIsAnswering(true)
       }
@@ -106,10 +111,17 @@ export function AdminRoom() {
 
   return (
     <div id="page-room">
-      <div><Toaster/></div>
+      {isModalVisible && (
+        <Modal
+          isVisible={isModalVisible}
+          removeItem={() => handleDeleteQuestion(idToDelete)}
+          cancel={() => setIsModalVisible(false)}
+        />
+      )}
+      <div><Toaster /></div>
       <header>
         <div className="content">
-          <img src={logoImg} alt="Letmeask" onClick={e => history.push('/')}/>
+          <img src={logoImg} alt="Letmeask" onClick={e => history.push('/')} />
 
           <div>
             <RoomCode code={roomId} />
@@ -144,23 +156,23 @@ export function AdminRoom() {
               >
                 {!question.isAnswered && (
                   <>
-                  { !hasAnswers && (
-                    <button
-                      className="like-button"
-                      type="button"
-                      aria-label="marcar como gostei"
-                      onClick={() => handleCheckQuestionAsAnswered(question.id)}
-                    >
-                      <img src={checkImg} alt="Marcar pergunta como respondida" />
-                    </button>
-                  )}
+                    {!hasAnswers && (
+                      <button
+                        className="like-button"
+                        type="button"
+                        aria-label="Marcar pergunta como respondida"
+                        onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                      >
+                        <img src={checkImg} alt="Marcar pergunta como respondida" />
+                      </button>
+                    )}
                     <button
                       className={cx(
                         "like-button",
                         { highlightedIcon: question.isHighlighted && isAnswering }
-                        )}
+                      )}
                       type="button"
-                      aria-label="marcar como gostei"
+                      aria-label="marcar como respondendo"
                       onClick={() => HandleSwitchHighlightQuestion(question.id, question.isHighlighted)}
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -172,8 +184,8 @@ export function AdminRoom() {
                 <button
                   className="like-button"
                   type="button"
-                  aria-label="marcar como gostei"
-                  onClick={() => handleDeleteQuestion(question.id)}
+                  aria-label="Remover pergunta"
+                  onClick={() => { setIdToDelete(question.id); setIsModalVisible(true) }}
                 >
                   <img src={deleteImg} alt="Remover pergunta" />
                 </button>

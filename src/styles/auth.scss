@@ -52,7 +52,7 @@
     text-align: center;
     color: var(--text-dark);
 
-    p{color: var(--text-light)!important;}
+    p{color: var(--text-dark)!important;}
 
     > img {
       align-self: center;
@@ -72,7 +72,7 @@
         border: 1px solid var(--line-color);
 
         &::placeholder{
-          color: var(--text-medium);
+          color: var(--text-dark);
         }
       }
 

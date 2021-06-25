@@ -118,3 +118,15 @@
     }
   }
 }
+
+.highlightedIcon{
+  svg path{
+    stroke: #835afd;
+  }
+}
+
+@media (max-width: 1080px) {
+  #page-room main{
+    padding: 0 1rem;
+  }
+}

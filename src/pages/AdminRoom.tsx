@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
 import deleteImg from '../assets/images/delete.svg';
 import checkImg from '../assets/images/check.svg';
-import answerImg from '../assets/images/answer.svg';
+import cx from 'classnames';
 
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -35,10 +35,17 @@ export function AdminRoom() {
     })
   }
 
-  async function HandleHighlightQuestion(questionId: string) {
-    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
-      isHighlighted: true
-    })
+  async function HandleSwitchHighlightQuestion(questionId: string) {
+    const { isHighlighted } = await (await database.ref(`rooms/${roomId}/questions/${questionId}`).get()).val();
+    if (isHighlighted) {
+      await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+        isHighlighted: false
+      })
+    } else {
+      await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+        isHighlighted: true
+      })
+    }
   }
 
   async function handleEndRoom() {
@@ -82,7 +89,7 @@ export function AdminRoom() {
                 isAnswered={question.isAnswered}
                 isHighlighted={question.isHighlighted}
               >
-                { !question.isAnswered && (
+                {!question.isAnswered && (
                   <>
                     <button
                       className="like-button"
@@ -93,12 +100,17 @@ export function AdminRoom() {
                       <img src={checkImg} alt="Marcar pergunta como respondida" />
                     </button>
                     <button
-                      className="like-button"
+                      className={cx(
+                        "like-button",
+                        { highlightedIcon: question.isHighlighted }
+                        )}
                       type="button"
                       aria-label="marcar como gostei"
-                      onClick={() => HandleHighlightQuestion(question.id)}
+                      onClick={() => HandleSwitchHighlightQuestion(question.id)}
                     >
-                      <img src={answerImg} alt="Dar destaque à pergunta" />
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 17.9999H18C19.657 17.9999 21 16.6569 21 14.9999V6.99988C21 5.34288 19.657 3.99988 18 3.99988H6C4.343 3.99988 3 5.34288 3 6.99988V14.9999C3 16.6569 4.343 17.9999 6 17.9999H7.5V20.9999L12 17.9999Z" stroke="#737380" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
                     </button>
                   </>
                 )}

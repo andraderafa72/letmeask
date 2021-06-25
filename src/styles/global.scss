@@ -2,6 +2,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  &:focus{
+    outline: none;
+  }
 }
 
 body{
@@ -30,17 +34,21 @@ body{
 
 @media (prefers-color-scheme: dark) {
   :root{
-    --primary-color: #835afd;
+    --primary-color: #00A871;
     --body-background-color: linear-gradient(to right, #232526, #414345);;
-    --answered-background-color: #dbdcdd;
-    --question-background-color: #fefefe;
-    --highlight-background-color: #f4f0ff;
+    --answered-background-color: #dbdcdd27;
+    --question-background-color: #454655;
+    --highlight-background-color: #A7A8CD;
 
-    --border-color:#e2e2e2;
+    --border-color:#454655;
 
-    --text-dark: #f0ece2;
-    --text-medium: #737380;
-    --text-light: #fff;
+    --text-dark: #fff;
+    --text-medium: #544343;
+    --text-light: #DADAF4;
+
+    --code-card: #454655;
+
+    --question-textarea: #14152296;
 
     --google-button: #ea4335;
     --line-color: #a8a8b3;
@@ -48,11 +56,11 @@ body{
     --login-link: #e559f9;
   }
 
-  #page-auth {
+  #page-auth, #page-room {
     aside{
       filter: brightness(.95);
     }
-    main .main-content > img{
+    main .main-content > img, header .content > img{
       filter: invert(1);
     }
   }
@@ -62,7 +70,7 @@ body{
   :root{
     --primary-color: #835afd;
     --body-background-color: #f8f8f8;
-    --answered-background-color: #dbdcdd;
+    --answered-background-color: #dbdcdd88;
     --question-background-color: #fefefe;
     --highlight-background-color: #f4f0ff;
 
@@ -71,6 +79,8 @@ body{
     --text-dark: #29292e;
     --text-medium: #737380;
     --text-light: #fff;
+
+    --code-card: #fff;
 
     --google-button: #ea4335;
     --line-color: #a8a8b3;

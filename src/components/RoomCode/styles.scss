@@ -3,14 +3,15 @@
   border-radius: .5rem;
   overflow: hidden;
 
-  background: #fff;
+  background: var(--code-card);
   border: 1px solid var(--primary-color);
   cursor: pointer;
 
   display: flex;
+  color: var(--text-dark);
 
   div{
-    background: #835afd;
+    background: var(--primary-color);
     padding: 0 .75rem;
     height: 100%;
     display: flex;
@@ -23,7 +24,7 @@
     align-self: center;
     flex: 1;
     padding:0 1rem 0 .75rem;
-    width: 15rem;
+    width: 11rem;
     font-size: .875rem;
     font-weight: 500;
   }

@@ -50,6 +50,9 @@
     max-width: 20rem;
     align-items: stretch;
     text-align: center;
+    color: var(--text-dark);
+
+    p{color: var(--text-light)!important;}
 
     > img {
       align-self: center;
@@ -65,8 +68,12 @@
         height: 3.125rem;
         border-radius: .5rem;
         padding: 0 1rem;
-        background-color: var(--text-light);
+        background: var(--question-background-color);
         border: 1px solid var(--line-color);
+
+        &::placeholder{
+          color: var(--text-medium);
+        }
       }
 
       button{
@@ -80,7 +87,7 @@
 
     p{
       font-size: .875rem;
-      color: #737380;
+      color: var(--text-medium);
       margin-top: 1rem;
 
       a{

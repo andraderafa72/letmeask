@@ -1,4 +1,5 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useHistory, useParams } from 'react-router-dom';
 
 import logoImg from '../assets/images/logo.svg';
@@ -25,6 +26,12 @@ export function Room() {
 
   const [newQuestion, setNewQuestion] = useState('')
 
+  useEffect(() => {
+    toast('Seja bem vindo!', {
+      icon: '❤',
+    })
+  }, [])
+
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
     if (newQuestion.trim() === '') return;
@@ -45,6 +52,7 @@ export function Room() {
 
     await database.ref(`rooms/${roomId}/questions`).push(question);
     setNewQuestion('')
+    toast.success('Enviado!')
   }
 
   async function handleLikeQuestion(questionId: string, likeId: string | undefined) {
@@ -60,9 +68,10 @@ export function Room() {
 
   return (
     <div id="page-room">
+      <div><Toaster /></div>
       <header>
         <div className="content">
-          <img src={logoImg} alt="Letmeask" onClick={e => history.push('/')}/>
+          <img src={logoImg} alt="Letmeask" onClick={e => history.push('/')} />
 
           <RoomCode code={roomId} />
         </div>
@@ -110,7 +119,7 @@ export function Room() {
                 answer={question.answer}
               >
 
-                { !question.isAnswered && (
+                {!question.isAnswered && (
                   <button
                     className={`like-button ${question.likeId ? 'liked' : ''}`}
                     type="button"

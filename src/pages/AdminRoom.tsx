@@ -39,7 +39,7 @@ export function AdminRoom() {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
     }
 
-    toast.error('Pergunta apagada')
+    toast.error('Pergunta apagada!')
   }
 
   async function handleCheckQuestionAsAnswered(questionId: string) {
@@ -49,6 +49,8 @@ export function AdminRoom() {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isAnswered: true
     })
+
+    toast.error('Pergunta respondida!')
   }
 
   async function handleSetAnswer(answer: string){
@@ -60,7 +62,7 @@ export function AdminRoom() {
       answer: answer,
     });
     setIsAnswering(false)
-    toast.success('Pergunta respondida')
+    toast.success('Pergunta respondida!')
   }
 
   async function HandleSwitchHighlightQuestion(questionId: string, isHighlighted: boolean) {
@@ -136,6 +138,7 @@ export function AdminRoom() {
               >
                 {!question.isAnswered && (
                   <>
+                  { !hasAnswers && (
                     <button
                       className="like-button"
                       type="button"
@@ -144,6 +147,7 @@ export function AdminRoom() {
                     >
                       <img src={checkImg} alt="Marcar pergunta como respondida" />
                     </button>
+                  )}
                     <button
                       className={cx(
                         "like-button",

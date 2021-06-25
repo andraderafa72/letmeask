@@ -23,7 +23,7 @@
           height: 2.8125rem;
 
           &.outlined {
-            background:#fff;
+            background: var(--code-card);
             border: 1px solid var(--primary-color);
             color: var(--primary-color);
           }
@@ -99,7 +99,7 @@
 
         > span {
           font-size: .875rem;
-          color: var(--text-medium);
+          color: var(--text-dark);
           font-weight: 500;
 
           button {

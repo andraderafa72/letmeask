@@ -11,6 +11,7 @@ import '../styles/auth.scss';
 
 export function NewRoom() {
   const [newRoom, setNewRoom] = useState('')
+  const [hasAnswers, setHasAnswers] = useState(false)
   const { user } = useAuth()
   const history = useHistory()
 
@@ -24,6 +25,7 @@ export function NewRoom() {
     const firabaseRoom = await roomRef.push({
       title: newRoom,
       authorId: user?.id,
+      hasAnswers: hasAnswers,
     });
 
     history.push(`/rooms/${firabaseRoom.key}`)
@@ -48,6 +50,11 @@ export function NewRoom() {
               onChange={e => setNewRoom(e.target.value)}
               placeholder="Nome da sala"
             />
+
+            <div className="has-answers">
+              <input type="checkbox" checked={hasAnswers} onChange={e => setHasAnswers(!hasAnswers)} name="has-answers" id="" />
+              <span>Habilitar respostas no app</span>
+            </div>
             <Button type="submit">Criar sala</Button>
           </form>
           <p>Quer entrar em uma sala existente? <Link to="/">Clique aqui</Link></p>

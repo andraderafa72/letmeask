@@ -4,6 +4,7 @@ import { useAuth } from "./useAuth"
 
 type QuestionType = {
   id: string;
+  answer?: string;
   author: {
     name: string;
     avatar: string;
@@ -16,6 +17,7 @@ type QuestionType = {
 }
 
 type FirebaseQuestions = Record<string, {
+  answer?: string;
   author: {
     name: string;
     avatar: string;
@@ -32,6 +34,7 @@ export function useRoom(roomId: string){
   const [questions, setQuestions] = useState<QuestionType[]>([])
   const { user } = useAuth()
   const [title, setTitle] = useState('')
+  const [hasAnswers, setHasAnswers] = useState(false)
 
 
   useEffect(() => {
@@ -47,12 +50,14 @@ export function useRoom(roomId: string){
           author: value.author,
           isHighlighted: value.isHighlighted,
           isAnswered: value.isAnswered,
+          answer: value.answer,
           likeCount: Object.values(value.likes ?? {}).length,
           likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
         }
       })
 
       setTitle(databaseRoom.title);
+      setHasAnswers(databaseRoom.hasAnswers);
       setQuestions(parsedQuestions);
     })
 
@@ -62,6 +67,7 @@ export function useRoom(roomId: string){
 
   return {
     title,
-    questions
+    questions,
+    hasAnswers,
   }
 }

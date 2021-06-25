@@ -105,6 +105,7 @@ export function Room() {
                 content={question.content}
                 isAnswered={question.isAnswered}
                 isHighlighted={question.isHighlighted}
+                answer={question.answer}
               >
 
                 { !question.isAnswered && (

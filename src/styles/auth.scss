@@ -87,6 +87,17 @@
     }
   }
 
+  .has-answers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    input[type="checkbox"]{
+      width: 1.2rem;
+    }
+  }
+
   .create-room{
     margin-top: 4rem;
     height: 3.125rem;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import logoImg from '../assets/images/logo.svg';
@@ -20,8 +21,10 @@ type RoomParams = {
 export function AdminRoom() {
   const params = useParams<RoomParams>()
   const roomId = params.id
-  const { questions, title } = useRoom(roomId)
+  const { questions, title, hasAnswers } = useRoom(roomId)
   const history = useHistory()
+  const [isAnswering ,setIsAnswering] = useState(false)
+  const [questionIdToAnswer, setQuestionIdToAnswer] = useState<string>()
 
   async function handleDeleteQuestion(questionId: string) {
     if (window.confirm('Tem certeza que deseja excluir esta pergunta?')) {
@@ -35,16 +38,28 @@ export function AdminRoom() {
     })
   }
 
-  async function HandleSwitchHighlightQuestion(questionId: string) {
-    const { isHighlighted } = await (await database.ref(`rooms/${roomId}/questions/${questionId}`).get()).val();
+  async function handleSetAnswer(answer: string){
+    await database.ref(`rooms/${roomId}/questions/${questionIdToAnswer}`).update({
+      isAnswered: true,
+      answer: answer,
+    });
+    setIsAnswering(false)
+  }
+
+  async function HandleSwitchHighlightQuestion(questionId: string, isHighlighted: boolean) {
     if (isHighlighted) {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
         isHighlighted: false
-      })
+      });
+
+      setIsAnswering(false)
+      setQuestionIdToAnswer('')
     } else {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
         isHighlighted: true
       })
+      setQuestionIdToAnswer(questionId)
+      setIsAnswering(true)
     }
   }
 
@@ -81,13 +96,17 @@ export function AdminRoom() {
 
         <section className="question-list">
           {questions.map(question => {
+            console.log(question)
             return (
               <Question
                 author={question.author}
                 key={question.id}
                 content={question.content}
                 isAnswered={question.isAnswered}
-                isHighlighted={question.isHighlighted}
+                isHighlighted={!hasAnswers && question.isHighlighted}
+                isAnswering={questionIdToAnswer === question.id && isAnswering}
+                setAnswerFunction={handleSetAnswer}
+                answer={question.answer}
               >
                 {!question.isAnswered && (
                   <>
@@ -102,14 +121,14 @@ export function AdminRoom() {
                     <button
                       className={cx(
                         "like-button",
-                        { highlightedIcon: question.isHighlighted }
+                        { highlightedIcon: question.isHighlighted && isAnswering }
                         )}
                       type="button"
                       aria-label="marcar como gostei"
-                      onClick={() => HandleSwitchHighlightQuestion(question.id)}
+                      onClick={() => HandleSwitchHighlightQuestion(question.id, question.isHighlighted)}
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 17.9999H18C19.657 17.9999 21 16.6569 21 14.9999V6.99988C21 5.34288 19.657 3.99988 18 3.99988H6C4.343 3.99988 3 5.34288 3 6.99988V14.9999C3 16.6569 4.343 17.9999 6 17.9999H7.5V20.9999L12 17.9999Z" stroke="#737380" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path fillRule="evenodd" clipRule="evenodd" d="M12 17.9999H18C19.657 17.9999 21 16.6569 21 14.9999V6.99988C21 5.34288 19.657 3.99988 18 3.99988H6C4.343 3.99988 3 5.34288 3 6.99988V14.9999C3 16.6569 4.343 17.9999 6 17.9999H7.5V20.9999L12 17.9999Z" stroke="#737380" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </button>
                   </>

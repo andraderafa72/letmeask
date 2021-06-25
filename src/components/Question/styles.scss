@@ -25,6 +25,20 @@
     color: #29292e;
   }
 
+  form{
+    margin-top: 1rem;
+
+    textarea{
+      min-height: 4.125rem!important;
+    }
+
+    button{
+      margin-left: auto;
+      height: 2.675rem;
+      margin-top: .5rem;
+    }
+  }
+
   footer{
     display: flex;
     justify-content: space-between;
@@ -76,5 +90,26 @@
         }
       }
     }
+  }
+}
+
+
+.answer{
+  width: calc(100% - 2rem);
+  margin: 0 auto;
+  padding: .75rem 1rem 1rem;
+  margin-top: 1rem;
+  border-radius: .5rem;
+  background-color: #dbdcdd7c;
+
+  span{
+    font-weight: 500;
+    font-size: .8rem;
+    color: #835afd;
+  }
+
+  p{
+    color: #29292e;
+    margin-top: 0.25rem;
   }
 }

@@ -11,8 +11,11 @@ import { Question } from '../components/Question';
 import { RoomCode } from '../components/RoomCode';
 import { useRoom } from '../hooks/useRoom';
 
+import toast, { Toaster } from 'react-hot-toast'
+
 import '../styles/room.scss'
 import { database } from '../services/firebase';
+import { useAuth } from '../hooks/useAuth';
 
 type RoomParams = {
   id: string;
@@ -25,41 +28,63 @@ export function AdminRoom() {
   const history = useHistory()
   const [isAnswering ,setIsAnswering] = useState(false)
   const [questionIdToAnswer, setQuestionIdToAnswer] = useState<string>()
+  const {user} = useAuth();
 
   async function handleDeleteQuestion(questionId: string) {
+    const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
+    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+
+
     if (window.confirm('Tem certeza que deseja excluir esta pergunta?')) {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
     }
+
+    toast.error('Pergunta apagada')
   }
 
   async function handleCheckQuestionAsAnswered(questionId: string) {
+    const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
+    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isAnswered: true
     })
   }
 
   async function handleSetAnswer(answer: string){
+    const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
+    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+
     await database.ref(`rooms/${roomId}/questions/${questionIdToAnswer}`).update({
       isAnswered: true,
       answer: answer,
     });
     setIsAnswering(false)
+    toast.success('Pergunta respondida')
   }
 
   async function HandleSwitchHighlightQuestion(questionId: string, isHighlighted: boolean) {
+    const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()
+    if(!user || authorId !== user.id) return history.push(`/rooms/${roomId}`)
+
     if (isHighlighted) {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
         isHighlighted: false
       });
 
-      setIsAnswering(false)
-      setQuestionIdToAnswer('')
+      if(hasAnswers){
+        setIsAnswering(false)
+        setQuestionIdToAnswer('')
+      }
     } else {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
         isHighlighted: true
       })
-      setQuestionIdToAnswer(questionId)
-      setIsAnswering(true)
+
+      if(hasAnswers){
+        setQuestionIdToAnswer(questionId)
+        setIsAnswering(true)
+      }
     }
   }
 
@@ -73,9 +98,10 @@ export function AdminRoom() {
 
   return (
     <div id="page-room">
+      <div><Toaster/></div>
       <header>
         <div className="content">
-          <img src={logoImg} alt="Letmeask" />
+          <img src={logoImg} alt="Letmeask" onClick={e => history.push('/')}/>
 
           <div>
             <RoomCode code={roomId} />

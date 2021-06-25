@@ -22,13 +22,19 @@ export function NewRoom() {
 
     const roomRef = database.ref('rooms');
 
+
+    const roomId = Math.random() * (99999999 - 10000000) + 10000000;
+
+
     const firabaseRoom = await roomRef.push({
       title: newRoom,
+      roomId: roomId,
       authorId: user?.id,
       hasAnswers: hasAnswers,
     });
 
-    history.push(`/rooms/${firabaseRoom.key}`)
+    console.log(roomRef.child('roomId'))
+    history.push(`/admin/rooms/${firabaseRoom.key}`)
   }
 
   return (

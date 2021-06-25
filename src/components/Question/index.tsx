@@ -21,8 +21,6 @@ type QuestionProps = {
 export function Question({ content, answer, author, isHighlighted = false, isAnswered = false, isAnswering = false, setAnswerFunction = () => { }, children }: QuestionProps) {
   const [newAnswer, setNewAnswer] = useState('')
 
-
-
   return (
     <div
       className={cx(
@@ -37,6 +35,13 @@ export function Question({ content, answer, author, isHighlighted = false, isAns
         <div className="answer">
           <span>Resposta</span>
           <p>{answer}</p>
+
+          <footer>
+            <div className="user-info">
+              <img src={author.avatar} alt={author.name} />
+              <span>{author.name}</span>
+            </div>
+          </footer>
         </div>
         )}
 

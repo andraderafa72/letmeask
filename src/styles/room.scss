@@ -1,7 +1,7 @@
 #page-room {
   header {
     padding: 1.5rem;
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid var(--border-color);
 
     .content {
       max-width: 70rem;
@@ -12,6 +12,7 @@
 
       >img {
         max-height: 2.8125rem;
+        cursor: pointer;
       }
 
       >div {
@@ -23,8 +24,8 @@
 
           &.outlined {
             background:#fff;
-            border: 1px solid #835afd;
-            color: #835afd;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
           }
         }
       }
@@ -34,6 +35,7 @@
   main {
     max-width: 50rem;
     margin: 0 auto;
+    padding-bottom: 2rem;
 
     .room-title {
       margin: 2rem 0 1.5rem;
@@ -44,12 +46,12 @@
         font-family: 'Poppins', sans-serif;
 
         font-size: 1.5rem;
-        color: #29292E;
+        color: var(--text-dark);
       }
 
       span {
         margin-left: 1rem;
-        background: #e559f9;
+        background: var(--login-link);
         border-radius: 100rem;
         padding: .5rem 1rem;
         color: #fff;
@@ -65,7 +67,7 @@
         border: 0;
         padding: 1rem;
         border-radius: .5rem;
-        background-color: #fefefe;
+        background-color: var(--question-background-color);
         box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
         resize: vertical;
         min-height: 8.125rem;
@@ -89,21 +91,21 @@
 
           span {
             margin-left: 0.5rem;
-            color: #29292e;
+            color: var(--text-dark);
             font-weight: 500;
             font-size: .875rem;
           }
         }
 
-        >span {
+        > span {
           font-size: .875rem;
-          color: #737308;
+          color: var(--text-medium);
           font-weight: 500;
 
           button {
             background: transparent;
             border: none;
-            color: #835afd;
+            color: var(--primary-color);
             text-decoration: undefined;
             font-size: .875rem;
             font-weight: 500;
@@ -121,7 +123,7 @@
 
 .highlightedIcon{
   svg path{
-    stroke: #835afd;
+    stroke: var(--primary-color);
   }
 }
 

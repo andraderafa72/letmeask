@@ -1,5 +1,5 @@
 .question{
-  background: #fefefe;
+  background: var(--question-background-color);
   border-radius: .5rem;
   box-shadow: 0px 2px 12px rgba(0,0,0, .04);
   padding: 1.5rem;
@@ -9,20 +9,20 @@
   }
 
   &.highlighted{
-    background: #f4f0ff;
-    border: 1px solid #835afd;
+    background: var(--highlight-background-color);
+    border: 1px solid var(--primary-color);
 
     footer .user-info span{
-      color: #29292e;
+      color: var(--text-dark);
     }
   }
 
   &.answered{
-    background: #dbdcdd;
+    background: var(--answered-background-color);
   }
 
   p{
-    color: #29292e;
+    color: var(--text-dark);
   }
 
   footer{
@@ -42,7 +42,7 @@
 
       span{
         margin-left: 0.5rem;
-        color: #737380;
+        color: var(--text-medium);
         font-size: .875rem;
       }
     }
@@ -64,10 +64,10 @@
         gap: .5rem;
 
         &.liked {
-          color: #835afd;
+          color: var(--primary-color);
 
           svg path{
-            stroke: #835afd;
+            stroke: var(--primary-color);
           }
         }
 

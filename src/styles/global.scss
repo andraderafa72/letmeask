@@ -5,10 +5,92 @@
 }
 
 body{
-  background: #f8f8f8;
+  background: var(--body-background-color);
   color: #29292e;
+}
+
+// :root{
+//   --primary-color: #835afd;
+//   --body-background-color: #f8f8f8;
+//   --answered-background-color: #dbdcdd;
+//   --question-background-color: #fefefe;
+//   --highlight-background-color: #f4f0ff;
+
+//   --border-color:#e2e2e2;
+
+//   --text-dark: #29292e;
+//   --text-medium: #737380;
+//   --text-light: #fff;
+
+//   --google-button: #ea4335;
+//   --line-color: #a8a8b3;
+
+//   --login-link: #e559f9;
+// }
+
+@media (prefers-color-scheme: dark) {
+  :root{
+    --primary-color: #835afd;
+    --body-background-color: linear-gradient(to right, #232526, #414345);;
+    --answered-background-color: #dbdcdd;
+    --question-background-color: #fefefe;
+    --highlight-background-color: #f4f0ff;
+
+    --border-color:#e2e2e2;
+
+    --text-dark: #f0ece2;
+    --text-medium: #737380;
+    --text-light: #fff;
+
+    --google-button: #ea4335;
+    --line-color: #a8a8b3;
+
+    --login-link: #e559f9;
+  }
+
+  #page-auth {
+    aside{
+      filter: brightness(.95);
+    }
+    main .main-content > img{
+      filter: invert(1);
+    }
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root{
+    --primary-color: #835afd;
+    --body-background-color: #f8f8f8;
+    --answered-background-color: #dbdcdd;
+    --question-background-color: #fefefe;
+    --highlight-background-color: #f4f0ff;
+
+    --border-color:#e2e2e2;
+
+    --text-dark: #29292e;
+    --text-medium: #737380;
+    --text-light: #fff;
+
+    --google-button: #ea4335;
+    --line-color: #a8a8b3;
+
+    --login-link: #e559f9;
+  }
 }
 
 body, input, button, textarea{
   font: 400 1rem 'Roboto', sans-serif;
+}
+
+@media (max-width: 1080px) {
+  html{
+    font-size: 93.75%;
+  }
+}
+
+@media (max-width: 1880px) {
+  html{
+    font-size: 87.5%;
+  }
 }

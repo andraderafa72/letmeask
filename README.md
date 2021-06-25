@@ -26,6 +26,9 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 Projeto desenvolvido na trilha de React Js do evento Next Level Week Together, com aulas incriveis do [Diego Fernandes](https://github.com/diego3g)
 
+### Algumas salas para testar o projeto
+- -Md2a8jssHJ4BBW-KVPQ
+- -Md2akpuR2QJv68iNg_T
 
 ### Tema escuro
 ![alt text](https://i.ibb.co/TqR4C7R/letmeask-dark.png)

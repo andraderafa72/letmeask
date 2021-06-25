@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import logoImg from '../assets/images/logo.svg';
@@ -29,6 +29,12 @@ export function AdminRoom() {
   const [isAnswering ,setIsAnswering] = useState(false)
   const [questionIdToAnswer, setQuestionIdToAnswer] = useState<string>()
   const {user} = useAuth();
+
+  useEffect(() => {
+    toast('Seja bem-vindo!', {
+      icon: '❤',
+    })
+  }, [])
 
   async function handleDeleteQuestion(questionId: string) {
     const { authorId } = await (await database.ref(`rooms/${roomId}`).get()).val()

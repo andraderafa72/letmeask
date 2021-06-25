@@ -27,7 +27,7 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState('')
 
   useEffect(() => {
-    toast('Seja bem vindo!', {
+    toast('Seja bem-vindo!', {
       icon: '❤',
     })
   }, [])

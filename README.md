@@ -1,5 +1,12 @@
-# letmeask
-Projeto feito na trilha de ReactJs do evento NLW Together
+<p align="center">
+  <img alt="Letmeask" src="src/assets/images/logo.svg" width="200px">
+</p>
+
+<p align="center">
+  <i>Projeto feito na trilha de ReactJs do evento NLW Together.</i><br>
+  <i><a href="https://letmeask-68aa3.web.app/">Veja funcionando</a></i>
+</p>
+
 
 ![alt text](https://i.ibb.co/1XWsMKV/letmeask-light.png)
 

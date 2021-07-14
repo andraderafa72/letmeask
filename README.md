@@ -47,3 +47,7 @@ Projeto desenvolvido na trilha de React Js do evento Next Level Week Together, c
 - Inicie o servidor com `npm start`
 
 Agora você pode acessar [`localhost:3000`](http://localhost:3000) do seu navegador.
+
+<br>
+
+Made with 💜 by Rafael Andrade 👋 [Check out my LinkedIn](https://www.linkedin.com/in/andraderafa72)
